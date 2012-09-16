@@ -1,0 +1,125 @@
+body {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:14px;
+	margin:50px;
+	color:#666; 
+}
+
+/** Formulaire d'insertion des paris **/
+#page_pari form {
+	width: 800px;
+}
+#page_pari form p { 
+	display: block;
+	clear: both;
+}
+#page_pari label {
+	text-align:right;
+	width:20%;
+	float:left;
+	padding:0.2em;
+	margin:0;
+	margin-top:0.3em; 
+}
+#page_pari label.inline { display:inline; float: none; }
+#page_pari input[type="text"], #page_pari input[type="number"] {
+	margin:3px;
+	height:20px;
+	width:200px;
+	border: 1px solid grey; 
+}
+#page_pari input[type="number"], #page_pari input#cote, #page_pari input#datepicker { text-align: right; }
+textarea {
+	margin:3px;
+	height:100px;
+	width:200px; 
+	border: 1px solid grey; 
+}
+#page_pari .ligne_match:nth-child(n+2) label { display: none; }
+#page_pari .ligne_match:nth-child(n+2) { margin-left: 21%; }
+#page_pari input[name="addMatch"] { margin-left: 21%; }
+
+/** Tableau de l'historique des paris **/
+
+.dataTables_wrapper {
+	width: 980px;
+	font-size: 12px;
+	margin: 0 auto;
+	font-family: sans-serif;
+}
+#edit_pari .dataTables_wrapper { 
+	width: 350px; 
+	margin: 0 0;
+}
+#edit_pari #tabMatchs_filter { display: none; }
+
+table  ul li{
+	list-style-type: none;
+	margin: 0;
+}
+
+li.match_success{
+	list-style-image: url('../images/bullet_green.png');
+}
+
+li.match_fail{
+	list-style-image: url('../images/bullet_red.png');
+}
+
+#h3NbParis{
+	margin-left: 155px;
+}
+
+/** Statistiques **/
+#chiffres{
+	display:block;
+	height:400px;
+	width:1000px;
+}
+
+#chiffres .moyennes{
+	float:left;
+}
+
+#chiffresMoyennes{
+	margin: 80px 0 0 30px;
+}
+
+#piesParisMatchs{
+	display:block;
+	height:300px;
+}
+
+#piesParisMatchs .piePariMatch{
+	width:350px;
+	float: left;
+}
+
+#piesChampionnats{
+	display:block;
+	height:400px;
+}
+
+#piesChampionnats .pieChampionnat{
+	width:450px;
+	height:400px;
+	float: left;
+}
+
+#piesChampionnats .barChampionnat{
+	width:600px;
+	height:400px;
+	float: left;
+}
+
+#statistiques #tabGainChampionnats_filter { display: none; }
+
+#tabGainChampionnats{
+	width:250px;
+	float:left;
+}
+
+#barCote{
+	width:600px;
+	float: left;
+}
