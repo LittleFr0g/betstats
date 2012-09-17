@@ -2,7 +2,7 @@
 <?php
 
 	function connect(){
-		mysql_connect("localhost","root","root");
+		mysql_connect("localhost","root","");
 		mysql_select_db("betstats");
 		//mysql_select_db("test");
 		mysql_query("SET NAMES 'utf8'");

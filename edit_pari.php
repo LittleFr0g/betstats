@@ -48,9 +48,11 @@ require_once('_functions.php');
     <link rel="stylesheet" href="css/betstats.css" type="text/css" media="all" />
     <link rel="stylesheet" href="css/demo_table_jui.css" type="text/css" media="all" /> 
     <link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="all" /> 	
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="jquery/jquery.dataTables.js" type="text/javascript"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
 </head>
     
 <body id="edit_pari">
