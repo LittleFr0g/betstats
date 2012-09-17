@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
     <link rel="stylesheet" href="css/betstats.css" type="text/css" media="all" />
     <link rel="stylesheet" href="jquery/uniform/css/uniform.default.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" >
+    
 	<script src="jquery/jquery1.6.2.min.js" type="text/javascript"></script>
 	<script src="jquery/jqueryui1.8.16.min.js" type="text/javascript"></script>
 	<script src="jquery/jquery.ui.datepicker-fr.js" type="text/javascript"></script>
 	<script src="jquery/uniform/jquery.uniform.js" type="text/javascript"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+	
 
 </head>
     

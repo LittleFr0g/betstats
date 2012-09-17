@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="css/demo_table_jui.css" type="text/css" media="all" />   
     <link rel="stylesheet" href="css/betstats.css" type="text/css" media="all" />   
     <link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />    
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" >
+    
 	<script src="jquery/jquery1.6.2.min.js" type="text/javascript"></script>
 	<script src="jquery/jqueryui1.8.16.min.js" type="text/javascript"></script>
 	<script src="jquery/jquery.dataTables.js" type="text/javascript"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+	
 	
 
 		
