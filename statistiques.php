@@ -7,8 +7,9 @@
 	<link rel="stylesheet" href="css/jquery.jqplot.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="css/demo_table_jui.css" type="text/css" media="all" /> 
 	<link rel="stylesheet" href="css/betstats.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" media="all" />
 
-	<script src="jquery/jquery1.6.2.min.js" type="text/javascript"></script>
+	<script src="jquery/jquery1.8.1.min.js" type="text/javascript"></script>
 	<script src="jquery/jqueryui1.8.16.min.js" type="text/javascript"></script>
 	<script src="jquery/jqplot/jquery.jqplot.min.js" type="text/javascript"></script>
 	<script src="jquery/jqplot/jqplot.highlighter.min.js" type="text/javascript"></script>
@@ -19,6 +20,7 @@
 	<script src="jquery/jqplot/jqplot.canvasTextRenderer.min.js" type="text/javascript"></script>
 	<script src="jquery/jqplot/jqplot.canvasAxisTickRenderer.min.js" type="text/javascript"></script>
 	<script src="jquery/jqplot/jqplot.categoryAxisRenderer.min.js" type="text/javascript"></script>
+	<script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	
 	<script src="jquery/jquery.dataTables.js" type="text/javascript"></script>
 
@@ -27,6 +29,18 @@
 </head>
     
 <body id="statistiques">
+
+	<!-- Menu Bootstrap -->
+	<div class="navbar navbar-inverse">
+	  <div class="navbar-inner">
+	    <a class="brand" href="paris_view.php">BetStats</a>
+	    <ul class="nav">
+	      <li><a href="paris_view.php">Historique</a></li>
+	      <li><a href="paris.php">Parier</a></li>
+	      <li class="active"><a href="statistiques.php">Statistiques</a></li>
+	    </ul>
+	  </div>
+	</div>
 
 <?php
 require_once('_functions.php'); 

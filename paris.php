@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
     <link rel="stylesheet" href="css/betstats.css" type="text/css" media="all" />
     <link rel="stylesheet" href="jquery/uniform/css/uniform.default.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" media="all" />
     
-	<script src="jquery/jquery1.6.2.min.js" type="text/javascript"></script>
+	<script src="jquery/jquery1.8.1.min.js" type="text/javascript"></script>
 	<script src="jquery/jqueryui1.8.16.min.js" type="text/javascript"></script>
 	<script src="jquery/jquery.ui.datepicker-fr.js" type="text/javascript"></script>
 	<script src="jquery/uniform/jquery.uniform.js" type="text/javascript"></script>
+	<script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	
 
 </head>
@@ -66,6 +68,17 @@ if(isset($_POST) && !empty($_POST)) {
 
 
 ?>
+	<!--Menu Bootstrap-->
+	<div class="navbar navbar-inverse">
+	  <div class="navbar-inner">
+	    <a class="brand" href="paris_view.php">BetStats</a>
+	    <ul class="nav">
+	      <li><a href="paris_view.php">Historique</a></li>
+	      <li class="active"><a href="paris.php">Parier</a></li>
+	      <li><a href="statistiques.php">Statistiques</a></li>
+	    </ul>
+	  </div>
+	</div>
 
 	<h2>Cr&eacute;er un nouveau pari : </h2>
     
