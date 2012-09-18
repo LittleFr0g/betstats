@@ -6,9 +6,10 @@ body {
 }
 
 /** Formulaire d'insertion des paris **/
-#page_pari form {
+/**#page_pari form {
 	width: 800px;
-}
+};
+**/
 #page_pari form p { 
 	display: block;
 	clear: both;
@@ -52,6 +53,10 @@ textarea {
 	margin: 0 0;
 }
 #edit_pari #tabMatchs_filter { display: none; }
+
+#edit_pari form {
+	margin-left: 50px;
+}
 
 table  ul li{
 	list-style-type: none;

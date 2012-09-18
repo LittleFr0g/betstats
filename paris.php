@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
     
 <head>
-	<title>Paris</title>
+	<title>Parier</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         
     <link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />

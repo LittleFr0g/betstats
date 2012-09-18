@@ -58,6 +58,18 @@ require_once('_functions.php');
 </head>
     
 <body id="edit_pari">
+
+	<!--Menu Bootstrap-->
+	<div class="navbar navbar-inverse">
+	  <div class="navbar-inner">
+	    <a class="brand" href="paris_view.php">BetStats</a>
+	    <ul class="nav">
+	      <li><a href="paris_view.php">Historique</a></li>
+	      <li><a href="paris.php">Parier</a></li>
+	      <li><a href="statistiques.php">Statistiques</a></li>
+	    </ul>
+	  </div>
+	</div>
 	
 	<h2>Editer un pari</h2>
 	
@@ -170,8 +182,8 @@ require_once('_functions.php');
 		<label for="commentaire">Commentaire : </label>
 		<textarea name="commentaire"><?php echo $backPari['COMMENTAIRE']?></textarea>
 		</p>
-		
-		<p><input type="submit" value="Enregistrer" /><input type="reset" value="Supprimer" /></p>
+	 	
+		<p><input type="submit" value="Enregistrer" class="btn btn-info" /><input type="reset" value="Supprimer" class="btn btn-info"/></p>
 	</form>
 
 <script>
