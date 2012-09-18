@@ -5,6 +5,10 @@ body {
 	color:#666; 
 }
 
+#page_pari,#historique,#statistiques,#edit_pari{
+	margin-left: 50px;
+} 
+
 /** Formulaire d'insertion des paris **/
 /**#page_pari form {
 	width: 800px;
@@ -45,7 +49,7 @@ textarea {
 .dataTables_wrapper {
 	width: 980px;
 	font-size: 12px;
-	margin: 0 auto;
+	margin: 0 0 0 50px;
 	font-family: sans-serif;
 }
 #edit_pari .dataTables_wrapper { 
@@ -72,10 +76,11 @@ li.match_fail{
 }
 
 #h3NbParis{
-	margin-left: 155px;
+	margin-left: 50px;
 }
 
 /** Statistiques **/
+
 #chiffres{
 	display:block;
 	height:400px;
@@ -127,4 +132,8 @@ li.match_fail{
 #barCote{
 	width:600px;
 	float: left;
+}
+
+#test{
+	display:block;
 }

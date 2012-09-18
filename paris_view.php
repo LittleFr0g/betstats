@@ -20,7 +20,7 @@
 		
 </head>
     
-<body>
+<body id="historique">
 
 	<!-- Menu Bootstrap -->
 	<div class="navbar navbar-inverse">

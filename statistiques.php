@@ -128,37 +128,39 @@ echo '</div>';
 
 
 <p>
-<table class="display" id="tabGainChampionnats">
-	<thead>
-		<tr>
-			<th>Championnat</th>
-			<th>Gain</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php
-		connect();
 
-		// Requete pour voir les gains par championnats
-		$queryGainChampionnat=mysql_query('SELECT LIB_CHAMPIONNAT, SUM(MISE*COTE) AS GAIN FROM PARI P,CHAMPIONNAT C '.
-			'WHERE P.ID_CHAMPIONNAT = C.ID_CHAMPIONNAT AND P.REUSSITE =1 AND P.TERMINE =1 AND P.ID_CHAMPIONNAT IN '.
-			'(SELECT ID_CHAMPIONNAT FROM CHAMPIONNAT) GROUP BY LIB_CHAMPIONNAT ORDER BY GAIN DESC');
-		while ($back = mysql_fetch_array($queryGainChampionnat)) {
-			
-			echo '<tr>';
-				echo '<td>'.$back['LIB_CHAMPIONNAT'];
-				echo '<td>'.number_format($back['GAIN'],2);
-			echo '</tr>';		
-		}
+<div id="test">
+	<table class="display" id="tabGainChampionnats">
+		<thead>
+			<tr>
+				<th>Championnat</th>
+				<th>Gain</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+			connect();
 
-		deconnect();
-		?>
-	</tbody>
-</table>	
-</p>
+			// Requete pour voir les gains par championnats
+			$queryGainChampionnat=mysql_query('SELECT LIB_CHAMPIONNAT, SUM(MISE*COTE) AS GAIN FROM PARI P,CHAMPIONNAT C '.
+				'WHERE P.ID_CHAMPIONNAT = C.ID_CHAMPIONNAT AND P.REUSSITE =1 AND P.TERMINE =1 AND P.ID_CHAMPIONNAT IN '.
+				'(SELECT ID_CHAMPIONNAT FROM CHAMPIONNAT) GROUP BY LIB_CHAMPIONNAT ORDER BY GAIN DESC');
+			while ($back = mysql_fetch_array($queryGainChampionnat)) {
+				
+				echo '<tr>';
+					echo '<td>'.$back['LIB_CHAMPIONNAT'];
+					echo '<td>'.number_format($back['GAIN'],2);
+				echo '</tr>';		
+			}
 
-<div id='barCote' class='barChampionnat'></div>     
+			deconnect();
+			?>
+		</tbody>
+	</table>	
+	</p>
 
+	<div id='barCote' class='barChampionnat'></div>     
+</div>
 
 
 

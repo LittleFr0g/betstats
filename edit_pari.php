@@ -10,9 +10,10 @@ require_once('_functions.php');
 		echo '</pre>';	
 		
 		/*
-		 * Il faut updater le pari
-		 * les matchs 
-		 * et si le pari est terminé et gagnant, updater les comptes
+		 * Il faut updater : 
+		 * - le pari
+		 * - les matchs 
+		 * - et si le pari est terminé et gagnant, updater les comptes
 		 */
 		
 
@@ -20,8 +21,10 @@ require_once('_functions.php');
 		$update_Pari .= 'SET COMMENTAIRE=\''.mysql_real_escape_string($_POST['commentaire']).'\', ';
 		if(isset($_POST['reussite_pari'])){
 			$update_Pari .= 'SET REUSSITE= 1, ';
+			$reussite_pari = 1;
 		}else{
 			$update_Pari .= 'SET REUSSITE= 0, ';
+			$reussite_pari = 0;
 		}
 		if(isset($_POST['termine_pari'])){
 			$update_Pari .= 'SET TERMINE= 1 ';
@@ -30,7 +33,22 @@ require_once('_functions.php');
 		}
 		$update_Pari .= 'WHERE ID_PARI='.$_GET['id_pari'].'';
 		echo $update_Pari;
+		echo '<br />';
 		//mysql_query($update_Pari) or die(mysql_error());
+
+		if($reussite_pari){
+			$queryCredit = mysql_query('SELECT CREDIT FROM COMPTE WHERE ID_PARI='.$_GET['id_pari']);  
+			$backCredit = mysql_fetch_array($queryCredit);
+			$credit=$backCredit['CREDIT'];
+
+			$queryPari = mysql_query('SELECT MISE, REUSSITE, COTE, TERMINE, COMMENTAIRE FROM PARI WHERE ID_PARI='.$_GET['id_pari']);  
+			$backPari = mysql_fetch_array($queryPari);
+			$gain = $backPari['MISE'] * $backPari['COTE'];
+			$newCredit = $credit + $gain;
+
+			$update_Credit = 'UPDATE COMPTE SET CREDIT ='.$newCredit.' WHERE ID_PARI='.$_GET['id_pari'].'';
+			echo $update_Credit;
+		}
 		
 		//header('Location: paris_view.php');
 		
