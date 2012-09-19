@@ -72,18 +72,18 @@ $nbParisPerdus=$backNbParisPerdus['NB'];
 $queryArgentJoue=mysql_query('SELECT SUM(MISE) as SOMME, SUM(MISE*COTE) as GAIN, SUM(COTE) AS COTE FROM PARI WHERE TERMINE=1');
 $backArgentJoue = mysql_fetch_array($queryArgentJoue);
 $argentJoue=$backArgentJoue['SOMME'];
-$argentPotentiel=number_format($backArgentJoue['GAIN'],2);
+$argentPotentiel=$backArgentJoue['GAIN'];
 $coteTotal=$backArgentJoue['COTE'];
 
 //Argent gagné
 $queryArgentGagne=mysql_query('SELECT SUM(MISE*COTE) as GAIN FROM PARI WHERE REUSSITE=1');
 $backArgentGagne = mysql_fetch_array($queryArgentGagne);
-$argentGagne=number_format($backArgentGagne['GAIN'],2);
+$argentGagne=$backArgentGagne['GAIN'];
 
-$miseMoyenne = number_format($argentJoue/$nbParis,2);
-$gainMoyen = number_format($argentGagne/$nbParis,2);
-$gainPotentielMoyen = number_format($argentPotentiel/$nbParis,2);
-$coteMoyenne = number_format($coteTotal/$nbParis,2);
+$miseMoyenne = $argentJoue/$nbParis;
+$gainMoyen = $argentGagne/$nbParis;
+$gainPotentielMoyen = $argentPotentiel/$nbParis;
+$coteMoyenne = $coteTotal/$nbParis;
 
 
 deconnect();
@@ -99,15 +99,15 @@ echo '<div id="chiffres">';
 		
 		echo '<ul>';
 			echo '<li>Argent joué : <b>'.$argentJoue.' €</b></li>';
-			echo '<li>Gain potentiel : <b>'.$argentPotentiel.' €</b></li>';
-			echo '<li>Argent gagné : <b>'.$argentGagne.' €</b></li>';
+			echo '<li>Gain potentiel : <b>'.number_format($argentPotentiel,2).' €</b></li>';
+			echo '<li>Argent gagné : <b>'.number_format($argentGagne,2).' €</b></li>';
 		echo '</ul>';
 		
 		echo '<ul>';
-			echo '<li>Mise moyenne : <b>'.$miseMoyenne.' €</b></li>';
-			echo '<li>Gain potentiel moyen : <b>'.$gainPotentielMoyen.' €</b></li>';
-			echo '<li>Gain moyen : <b>'.$gainMoyen.' €</b></li>';
-			echo '<li>Cote moyenne : <b>'.$coteMoyenne.'</b></li>';
+			echo '<li>Mise moyenne : <b>'.number_format($miseMoyenne,2).' €</b></li>';
+			echo '<li>Cote moyenne : <b>'.number_format($coteMoyenne,2).'</b></li>';
+			echo '<li>Gain potentiel moyen : <b>'.number_format($gainPotentielMoyen,2).' €</b></li>';
+			echo '<li>Gain moyen : <b>'.number_format($gainMoyen,2).' €</b></li>';
 		echo '</ul>';
 	echo '</div>';
 echo '</div>';
