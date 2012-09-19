@@ -5,9 +5,11 @@ body {
 	color:#666; 
 }
 
+/**
 #page_pari,#historique,#statistiques,#edit_pari{
 	margin-left: 50px;
 } 
+**/
 
 /** Formulaire d'insertion des paris **/
 /**#page_pari form {
@@ -28,7 +30,7 @@ body {
 }
 #page_pari label.inline { display:inline; float: none; }
 #page_pari input[type="text"], #page_pari input[type="number"] {
-	margin:3px;
+	/**margin:3px;**/
 	height:20px;
 	width:200px;
 	border: 1px solid grey; 
@@ -41,8 +43,20 @@ textarea {
 	border: 1px solid grey; 
 }
 #page_pari .ligne_match:nth-child(n+2) label { display: none; }
-#page_pari .ligne_match:nth-child(n+2) { margin-left: 21%; }
-#page_pari input[name="addMatch"] { margin-left: 21%; }
+#page_pari .ligne_match:nth-child(n+2) { margin-left: 338px; }
+#page_pari input[name="addMatch"] { 
+	margin-left: 338px;
+	margin-bottom: 15px;
+	margin-top: -10px; 
+}
+#page_pari input[name="deleteMatch"] { 
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+#page_pari #submit_pari{
+	margin-left: 338px;
+}
 
 /** Tableau de l'historique des paris **/
 

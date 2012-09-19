@@ -6,14 +6,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         
     <link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="css/betstats.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="jquery/uniform/css/uniform.default.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/betstats.css" type="text/css" media="all" /> 
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" media="all" />      
     
 	<script src="jquery/jquery1.8.1.min.js" type="text/javascript"></script>
 	<script src="jquery/jqueryui1.8.16.min.js" type="text/javascript"></script>
 	<script src="jquery/jquery.ui.datepicker-fr.js" type="text/javascript"></script>
-	<script src="jquery/uniform/jquery.uniform.js" type="text/javascript"></script>
 	<script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	
 
@@ -120,7 +118,7 @@ if(isset($_POST) && !empty($_POST)) {
 		<p><label for="mise">Mise : </label><input type="number" id="mise" name="mise"	min="1" value="1" required /></p>
 		<p><label for="cote">Cote : </label><input type="text" id="cote" name="cote" required /></p>
 		<p><label for="commentaire">Commentaire : </label><textarea name="commentaire"></textarea></p>
-		<p><input type="submit" value="Enregistrer" /></p>
+		<p><input type="submit" id='submit_pari' class='btn' value="Enregistrer" /></p>
 		</p>
     </form>
     
@@ -133,9 +131,6 @@ if(isset($_POST) && !empty($_POST)) {
 	});
 	
 	$(document).ready(function() {
-		
-		$("select, input:checkbox, input:radio, input:text, textarea, input:button, input:submit").uniform();
-		
 		
 		$('select#championnat').change(function(){
 			getEquipesAndBuildLists($(this).val());
@@ -199,7 +194,7 @@ if(isset($_POST) && !empty($_POST)) {
 			var listPronostics = getEnumAndBuildList('MATCHS','PRONOSTIC');
 			var tabPronostics = listPronostics.split(';');
 			
-			var buttonDelete = $('<input>').attr('name','deleteMatch').attr('type','button').attr('value','Supprimer');
+			var buttonDelete = $('<input>').attr('name','deleteMatch').attr('type','button').attr('value','Supprimer').attr('class','btn');
 			buttonDelete.bind('click', function(){
 				$(this).parent().remove();	
 				majAddMatchButton();
@@ -219,6 +214,21 @@ if(isset($_POST) && !empty($_POST)) {
 			
 			//Constrution du select des pronostics
 			for(k=0;k<tabPronostics.length-1;k++){
+				/**
+				switch (tabPronostics[k]) {
+					case "1":
+					    var optionEnum = $('<option>').attr('value',tabPronostics[k]).html('Victoire à domicile');
+					    break;
+					case "N":
+					    var optionEnum = $('<option>').attr('value',tabPronostics[k]).html('Match nul');
+					    break;
+					case "2":
+					    var optionEnum = $('<option>').attr('value',tabPronostics[k]).html('Victoire à l\'extérieur');
+					    break;
+					default:
+						var optionEnum = $('<option>').attr('value',tabPronostics[k]).html('Autre');
+						break;
+				}**/				
 				var optionEnum = $('<option>').attr('value',tabPronostics[k]).html(tabPronostics[k]);
 				selectPronostic.append(optionEnum);
 			}
@@ -243,7 +253,7 @@ if(isset($_POST) && !empty($_POST)) {
 			var nbMatchs = $('p.ligne_match').size();
 			// On ajoute un bouton si on est en config Combiné
 			if(nbMatchs >= 2) {
-				var button = $('<input>').attr('name','addMatch').attr('type','button').attr('value','Ajouter un match');
+				var button = $('<input>').attr('name','addMatch').attr('type','button').attr('value','Ajouter un match').attr('class','btn');
 				button.bind('click', function(){
 					getEquipesAndBuildLists($('select#championnat').val());
 				});
