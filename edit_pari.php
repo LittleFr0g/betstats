@@ -1,14 +1,14 @@
 <?php 
 require_once('_functions.php'); 
 
-
+	//Traitement après SUBMIT
 	if(isset($_GET['action']) && $_GET['action']=='save' && isset($_POST) && !empty($_POST)){
 		connect();
-
+		/*
 		echo '<pre>';
 			var_dump($_POST);
 		echo '</pre>';	
-		
+		*/		
 		/*
 		 * Il faut updater : 
 		 * - le pari
@@ -20,23 +20,51 @@ require_once('_functions.php');
 		$update_Pari = 'UPDATE PARI ';
 		$update_Pari .= 'SET COMMENTAIRE=\''.mysql_real_escape_string($_POST['commentaire']).'\', ';
 		if(isset($_POST['reussite_pari'])){
-			$update_Pari .= 'SET REUSSITE= 1, ';
+			$update_Pari .= 'REUSSITE=1 , ';
 			$reussite_pari = 1;
 		}else{
-			$update_Pari .= 'SET REUSSITE= 0, ';
+			$update_Pari .= 'REUSSITE=0 , ';
 			$reussite_pari = 0;
 		}
 		if(isset($_POST['termine_pari'])){
-			$update_Pari .= 'SET TERMINE= 1 ';
+			$update_Pari .= 'TERMINE= 1 ';
+			$termine_pari = 1;
 		}else{
-			$update_Pari .= 'SET TERMINE= 0 ';
+			$update_Pari .= 'TERMINE= 0 ';
+			$termine_pari = 0;
 		}
+		if(!isset($_POST['termine_pari_before'])){
+			$termine_pari_before = 0 ;
+		}else{
+			$termine_pari_before = 1 ;
+		}
+		
 		$update_Pari .= 'WHERE ID_PARI='.$_GET['id_pari'].'';
 		echo $update_Pari;
 		echo '<br />';
-		//mysql_query($update_Pari) or die(mysql_error());
+		mysql_query($update_Pari) or die(mysql_error());
 
-		if($reussite_pari){
+		//Update des matchs
+		//On recupère les matchs associés à ce pari
+		$queryMatch = mysql_query('SELECT ID_MATCH FROM MATCHS WHERE ID_PARI='.$_GET['id_pari']);  
+		while($backMatch = mysql_fetch_array($queryMatch)){
+			$update_Match = 'UPDATE MATCHS ';
+			$update_Match .= 'SET RESULTAT=\''.$_POST['resultat_'.$backMatch['ID_MATCH'].''].'\', ';
+			if(isset($_POST['reussite_'.$backMatch['ID_MATCH'].''])){
+				$update_Match .= 'REUSSITE=1 ';
+			}else{
+				$update_Match .= 'REUSSITE=0 ';
+			}			
+			$update_Match .= 'WHERE ID_MATCH='.$backMatch['ID_MATCH'].'';
+			
+			echo $update_Match;
+			echo '<br />';
+			mysql_query($update_Match) or die(mysql_error());
+		}
+
+
+		//UPDATE du crédit si le pari est réussi et qu'il vient de se terminer
+		if($termine_pari && !$termine_pari_before && $reussite_pari ){
 			$queryCredit = mysql_query('SELECT CREDIT FROM COMPTE WHERE ID_PARI='.$_GET['id_pari']);  
 			$backCredit = mysql_fetch_array($queryCredit);
 			$credit=$backCredit['CREDIT'];
@@ -48,10 +76,14 @@ require_once('_functions.php');
 
 			$update_Credit = 'UPDATE COMPTE SET CREDIT ='.$newCredit.' WHERE ID_PARI='.$_GET['id_pari'].'';
 			echo $update_Credit;
+
+			mysql_query($update_Credit) or die(mysql_error());
 		}
-		
-		//header('Location: paris_view.php');
-		
+
+
+		deconnect();
+		//On redirige sur la page de l'historique
+		header('Location: paris_view.php');
 		
 	}
 ?>			
@@ -82,9 +114,10 @@ require_once('_functions.php');
 	  <div class="navbar-inner">
 	    <a class="brand" href="paris_view.php">BetStats</a>
 	    <ul class="nav">
-	      <li><a href="paris_view.php">Historique</a></li>
-	      <li><a href="paris.php">Parier</a></li>
-	      <li><a href="statistiques.php">Statistiques</a></li>
+	      	<li class='active'><a href="paris_view.php">Historique</a></li>
+	      	<li><a href="paris.php">Parier</a></li>
+	      	<li><a href="statistiques.php">Statistiques</a></li>
+	    	<li><a href="gestion.php">Gestion</a></li>
 	    </ul>
 	  </div>
 	</div>
@@ -148,7 +181,7 @@ require_once('_functions.php');
 				
 				//Affichage du resultat, on selectionne par défaut notre pronostic
 				echo '<td class="center">';		
-					echo '<select name="pronostic_'.$backMatch['ID_MATCH'].'">';
+					echo '<select name="resultat_'.$backMatch['ID_MATCH'].'">';
 					for($i=0;$i<sizeof($enum);$i++){
 						echo '<option value="'.str_replace("'","",$enum[$i]).'"';
 						if(str_replace("'","",$enum[$i])==$backMatch['PRONOSTIC']){echo 'selected="selected"';}
@@ -194,6 +227,14 @@ require_once('_functions.php');
 			if($backPari['TERMINE']==1){echo 'checked="checked"';}
 			echo '>';
 		?>
+		<!-- On met un champ caché pour savoir si ce pari est terminé avant modif pour ne pas
+			mettre à jour deux fois le crédit
+		-->
+		<?php
+			echo '<input type="checkbox" name="termine_pari_before" value="1" style="display:none"';
+			if($backPari['TERMINE']==1){echo 'checked="checked"';}
+			echo '>';
+		?>
 		</p>
 		
 		<p>
@@ -201,7 +242,7 @@ require_once('_functions.php');
 		<textarea name="commentaire"><?php echo $backPari['COMMENTAIRE']?></textarea>
 		</p>
 	 	
-		<p><input type="submit" value="Enregistrer" class="btn btn-info" /><input type="reset" value="Supprimer" class="btn btn-info"/></p>
+		<p><input type="submit" value="Enregistrer" class="btn" /><input type="reset" value="Supprimer" class="btn"/></p>
 	</form>
 
 <script>

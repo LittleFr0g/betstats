@@ -71,9 +71,10 @@ if(isset($_POST) && !empty($_POST)) {
 	  <div class="navbar-inner">
 	    <a class="brand" href="paris_view.php">BetStats</a>
 	    <ul class="nav">
-	      <li><a href="paris_view.php">Historique</a></li>
-	      <li class="active"><a href="paris.php">Parier</a></li>
-	      <li><a href="statistiques.php">Statistiques</a></li>
+	      	<li><a href="paris_view.php">Historique</a></li>
+	      	<li class="active"><a href="paris.php">Parier</a></li>
+	      	<li><a href="statistiques.php">Statistiques</a></li>
+	    	<li><a href="gestion.php">Gestion</a></li>
 	    </ul>
 	  </div>
 	</div>
