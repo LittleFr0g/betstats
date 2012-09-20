@@ -6,11 +6,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="css/demo_table_jui.css" type="text/css" media="all" />   
     <link rel="stylesheet" href="css/betstats.css" type="text/css" media="all" />   
-    <link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="all" /> 
+    <link rel="stylesheet" href="css/flick/jquery-ui-1.8.23.custom.css" type="text/css" media="all" />
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" media="all" />   
     
-	<script src="jquery/jquery1.8.1.min.js" type="text/javascript"></script>
-	<script src="jquery/jqueryui1.8.16.min.js" type="text/javascript"></script>
+	<script src="jquery/jquery-1.8.0.min.js" type="text/javascript"></script>
+	<script src="jquery/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>
 	<script src="jquery/jquery.dataTables.js" type="text/javascript"></script>
 	<script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	

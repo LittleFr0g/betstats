@@ -5,12 +5,12 @@
 	<title>Parier</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         
-    <link rel="stylesheet" href="css/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/flick/jquery-ui-1.8.23.custom.css" type="text/css" media="all" />
     <link rel="stylesheet" href="css/betstats.css" type="text/css" media="all" /> 
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" media="all" />      
     
-	<script src="jquery/jquery1.8.1.min.js" type="text/javascript"></script>
-	<script src="jquery/jqueryui1.8.16.min.js" type="text/javascript"></script>
+	<script src="jquery/jquery-1.8.0.min.js" type="text/javascript"></script>
+	<script src="jquery/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>
 	<script src="jquery/jquery.ui.datepicker-fr.js" type="text/javascript"></script>
 	<script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	
@@ -113,14 +113,13 @@ if(isset($_POST) && !empty($_POST)) {
 		?>
 		</p>
 		
-		<p id="par_equipes">
-		</p>
+		<div id="par_equipes"></div>
 		
 		<p><label for="mise">Mise : </label><input type="number" id="mise" name="mise"	min="1" value="1" required /></p>
 		<p><label for="cote">Cote : </label><input type="text" id="cote" name="cote" required /></p>
 		<p><label for="commentaire">Commentaire : </label><textarea name="commentaire"></textarea></p>
 		<p><input type="submit" id='submit_pari' class='btn' value="Enregistrer" /></p>
-		</p>
+
     </form>
     
    
@@ -215,21 +214,6 @@ if(isset($_POST) && !empty($_POST)) {
 			
 			//Constrution du select des pronostics
 			for(k=0;k<tabPronostics.length-1;k++){
-				/**
-				switch (tabPronostics[k]) {
-					case "1":
-					    var optionEnum = $('<option>').attr('value',tabPronostics[k]).html('Victoire à domicile');
-					    break;
-					case "N":
-					    var optionEnum = $('<option>').attr('value',tabPronostics[k]).html('Match nul');
-					    break;
-					case "2":
-					    var optionEnum = $('<option>').attr('value',tabPronostics[k]).html('Victoire à l\'extérieur');
-					    break;
-					default:
-						var optionEnum = $('<option>').attr('value',tabPronostics[k]).html('Autre');
-						break;
-				}**/				
 				var optionEnum = $('<option>').attr('value',tabPronostics[k]).html(tabPronostics[k]);
 				selectPronostic.append(optionEnum);
 			}
@@ -248,7 +232,7 @@ if(isset($_POST) && !empty($_POST)) {
 			majDeleteButton();
 			
 		}
-		'N' ; '1' ;
+
 		function majAddMatchButton(){
 			$('input[name="addMatch"]').remove();
 			var nbMatchs = $('p.ligne_match').size();
@@ -258,7 +242,7 @@ if(isset($_POST) && !empty($_POST)) {
 				button.bind('click', function(){
 					getEquipesAndBuildLists($('select#championnat').val());
 				});
-				$('#par_equipes').after(button);
+				$('#par_equipes').append(button);
 			}
 		}
 		

@@ -43,9 +43,12 @@ textarea {
 	border: 1px solid grey; 
 }
 #page_pari .ligne_match:nth-child(n+2) label { display: none; }
-#page_pari .ligne_match:nth-child(n+2) { margin-left: 338px; }
+#page_pari .ligne_match:nth-child(n+2) { 
+	margin-left: 20%; 
+	padding-left: 5px;
+}
 #page_pari input[name="addMatch"] { 
-	margin-left: 338px;
+	margin-left: 20%;
 	margin-bottom: 15px;
 	margin-top: -10px; 
 }
@@ -55,7 +58,7 @@ textarea {
 }
 
 #page_pari #submit_pari{
-	margin-left: 338px;
+	margin-left: 20%;
 }
 
 /** Tableau de l'historique des paris **/
@@ -150,4 +153,50 @@ li.match_fail{
 
 #test{
 	display:block;
+}
+
+/** Gestion **/
+#accordeon_championnat{
+	width:40%;
+	padding-left: 5%;
+	float:left;
+}
+
+#accordeon_championnat .equipe{
+	font-size: 14px;
+	font-weight: bold;
+  	line-height: 20px;
+	list-style: none;
+	color: #999999;
+	background-color: #d3cdcd;
+	padding: 5px;
+	margin: 3px;
+	border-radius: 5px;
+	clear: both;
+	width: 50%;
+}
+
+#accordeon_championnat .equipe a{
+	margin-left: 20px;
+}
+
+#edit_equipe{
+	width:40%;
+	height:400px;
+	margin-left: 50%;
+	position:absolute;
+	border:1px solid black;
+}
+
+
+#gestion{
+	display:block;
+}
+
+#h3LibelleEquipe{
+	margin: 15px 0 0 15px;
+}
+
+.itemListeEquipe{
+	border:1px solid black;
 }
