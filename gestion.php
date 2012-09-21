@@ -61,7 +61,8 @@
 									(SELECT NULL FROM EQUIPE_CHAMPIONNAT EC WHERE E.ID_EQUIPE = EC.ID_EQUIPE ) ORDER BY LIB_EQUIPE');
 							}
 							else if($id_championnat == CHAMPIONNAT_COUPE){
-								$queryEquipes=mysql_query('SELECT E.ID_EQUIPE, E.LIB_EQUIPE FROM EQUIPE E ORDER BY LIB_EQUIPE');
+								$queryEquipes=mysql_query('SELECT E.ID_EQUIPE, E.LIB_EQUIPE FROM EQUIPE E WHERE EXISTS 
+									(SELECT NULL FROM EQUIPE_CHAMPIONNAT EC WHERE E.ID_EQUIPE = EC.ID_EQUIPE ) ORDER BY LIB_EQUIPE');
 							}
 							else{								
 								$queryEquipes=mysql_query('SELECT 	E.ID_EQUIPE, E.LIB_EQUIPE FROM EQUIPE E, EQUIPE_CHAMPIONNAT C WHERE E.ID_EQUIPE=C.ID_EQUIPE AND C.ID_CHAMPIONNAT='.$id_championnat.' ORDER BY LIB_EQUIPE');
@@ -84,8 +85,7 @@
 
 		<div id="edit_equipe">
 			<h3 id="h3LibelleEquipe"></h3>
-			<div id="listChampionnats"></div>
-			
+			<ul id="listChampionnats"></ul>
 		</div>
 
 		
@@ -105,6 +105,7 @@
 		$( "#edit_equipe").droppable({
 			drop: function( event, ui ) {
 				$( this ).find( "#h3LibelleEquipe" ).text(ui.draggable.text());
+				$( this ).find( "#h3LibelleEquipe" ).attr('class','h3LibelleEquipe');
 
 				$.ajax({
 					url: 'ajax_requetes.php',
@@ -115,18 +116,30 @@
 			}
 		});
 
+
 		function buildListChampionnat(listChampionnat){
 			var championnats = listChampionnat.split(';');
-			
+
 			for(j=0;j<championnats.length-1;j++){
 				var id_championnat = championnats[j].split('*')[0];
 				var lib_championnat = championnats[j].split('*')[1];
-
-				var label = $('<label>').attr('value',id_championnat).html(lib_championnat);
-				console.log(label);
-				$(this).find("#listChampionnats").add(label);
+				var li = $('<li>').attr('value',id_championnat).attr('class','championnat').html(lib_championnat);
+				var a = $('<a>').attr('href','#').attr('class','lienSupprimer');
+				a.bind('click', function(){
+					$(this).parent().remove();	
+				});
+				var img = $('<img>').attr('src','images/fermer.png').attr('alt','Supprimer');
+				a.append(img);
+				li.append(a);
+				$("#listChampionnats").append(li);
 			}
-			
+			var pButtons=$('<p>');
+			var buttonSave = $('<input>').attr('name','saveTeam').attr('type','button').attr('value','Enregistrer').attr('class','btn');
+			buttonSave.bind('click', function(){
+				console.log('equipe à enregistrer')
+			});
+			pButtons.append(buttonSave);
+			$('#edit_equipe').append(pButtons);
 		}
 	});
 

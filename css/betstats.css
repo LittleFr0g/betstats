@@ -193,10 +193,46 @@ li.match_fail{
 	display:block;
 }
 
-#h3LibelleEquipe{
+.h3LibelleEquipe{
 	margin: 15px 0 0 15px;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 20px;
+	list-style: none;
+	color: #4E4C4C;
+	background-color: #D3CDCD;
+	padding: 12px;
+	border-radius: 5px;
+	clear: both;
+	width: 50%;
 }
 
 .itemListeEquipe{
 	border:1px solid black;
+}
+
+#edit_equipe p{
+	margin-left: 4%;
+}
+
+#listChampionnats{
+	height: 40%;
+}
+
+#listChampionnats .championnat{
+	font-size: 14px;
+	font-weight: bold;
+  	line-height: 20px;
+	list-style: none;
+	color: #fff;
+	background-color: #0F7BEB;
+	padding: 5px;
+	margin: 3px;
+	border-radius: 5px;
+	clear: both;
+	width: 50%;
+}
+
+.lienSupprimer{
+	float:right;
 }
