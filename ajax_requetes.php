@@ -136,6 +136,16 @@ if($requete==9){
 	
 }
 
+/** Page de gestion **/
+//Requete pour renvoyer la liste de championnats auquelle une équipe appartient
+if($requete==10){
+	$id_equipe = (int)$_GET['id_equipe'];
+	$queryChampionnat=mysql_query('SELECT C.ID_CHAMPIONNAT,LIB_CHAMPIONNAT FROM CHAMPIONNAT C, EQUIPE_CHAMPIONNAT EC WHERE C.ID_CHAMPIONNAT=EC.ID_CHAMPIONNAT and EC.ID_EQUIPE='.$id_equipe);
+	while ($back = mysql_fetch_array($queryChampionnat)) {
+		echo $back['ID_CHAMPIONNAT'].'*'.$back['LIB_CHAMPIONNAT'].';';
+	}
+}
+
 deconnect();
 
 

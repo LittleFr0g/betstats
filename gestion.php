@@ -70,8 +70,8 @@
 							echo '<div id="draggable">';
 								echo '<ul>';
 								while ($backEquipes = mysql_fetch_array($queryEquipes)) {
-									echo '<li class="equipe">';
-										echo '<a href="gestion.php?equipe='.$backEquipes['ID_EQUIPE'].'">'.$backEquipes['LIB_EQUIPE'].'</a>';
+									echo '<li class="equipe" value='.$backEquipes['ID_EQUIPE'].'>';
+										echo '<a href="#">'.$backEquipes['LIB_EQUIPE'].'</a>';
 									echo '</li>';
 								}
 								echo '</ul>';
@@ -84,7 +84,7 @@
 
 		<div id="edit_equipe">
 			<h3 id="h3LibelleEquipe"></h3>
-
+			<div id="listChampionnats"></div>
 			
 		</div>
 
@@ -106,15 +106,37 @@
 			drop: function( event, ui ) {
 				$( this ).find( "#h3LibelleEquipe" ).text(ui.draggable.text());
 
-				
+				$.ajax({
+					url: 'ajax_requetes.php',
+					data: { id_equipe:ui.draggable.val() , requete:10} ,
+					success: function(response){buildListChampionnat(response)},
+					dataType: 'html'
+				});
 			}
 		});
+
+		function buildListChampionnat(listChampionnat){
+			var championnats = listChampionnat.split(';');
+			
+			for(j=0;j<championnats.length-1;j++){
+				var id_championnat = championnats[j].split('*')[0];
+				var lib_championnat = championnats[j].split('*')[1];
+
+				var label = $('<label>').attr('value',id_championnat).html(lib_championnat);
+				console.log(label);
+				$(this).find("#listChampionnats").add(label);
+			}
+			
+		}
 	});
 
 
 	</script>
 
+<!--
+	
 
+-->
 
 
 </body>
