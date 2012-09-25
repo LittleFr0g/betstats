@@ -146,6 +146,38 @@ if($requete==10){
 	}
 }
 
+//Requete pour renvoyer le nombre de matchs sur lequel on a joué avec cette equipe et le nombre qu'on en a réussi
+if($requete==11){
+	$id_equipe = (int)$_GET['id_equipe'];
+	$queryInfos=mysql_query('SELECT count(id_match) as nbMatchs FROM MATCHS M WHERE M.id_equipe1 ='.$id_equipe.' OR M.id_equipe2 ='.$id_equipe);
+	while ($back = mysql_fetch_array($queryInfos)) {
+		echo $back['nbMatchs'].'*';
+	}
+
+	$queryInfos2=mysql_query('SELECT count(id_match) as nbMatchsReussis	FROM MATCHS M WHERE ((M.id_equipe1 ='.$id_equipe.' OR M.id_equipe2 ='.$id_equipe.')) AND M.reussite=1');
+	while ($back = mysql_fetch_array($queryInfos2)) {
+		echo $back['nbMatchsReussis'];
+	}
+}
+
+//Requete pour connaitre les championnats auquels une equipe ne participe pas
+if($requete==12){
+	$id_equipe = (int)$_GET['id_equipe'];
+	$queryChampionnat=mysql_query('SELECT C.ID_CHAMPIONNAT, LIB_CHAMPIONNAT FROM CHAMPIONNAT C WHERE NOT EXISTS (SELECT NULL FROM EQUIPE_CHAMPIONNAT EC WHERE C.ID_CHAMPIONNAT = EC.ID_CHAMPIONNAT AND EC.ID_EQUIPE='.$id_equipe.') ORDER BY LIB_CHAMPIONNAT ');
+	while ($back = mysql_fetch_array($queryChampionnat)) {
+		echo $back['ID_CHAMPIONNAT'].'*'.$back['LIB_CHAMPIONNAT'].';';
+	}
+}
+
+//Requete pour insérer une equipe dans un nouveau championnat
+if($requete==13){
+	$id_equipe = (int)$_GET['id_equipe'];
+	$id_championnat = (int)$_GET['id_championnat'];
+	
+	$insert_equipe = 'INSERT INTO EQUIPE_CHAMPIONNAT(`id_equipe`,`id_championnat`) values('.$id_equipe.','.$id_championnat.')';
+	mysql_query($insert_equipe) or die(mysql_error());
+}
+
 deconnect();
 
 

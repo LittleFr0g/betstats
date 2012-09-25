@@ -182,11 +182,16 @@ li.match_fail{
 
 #edit_equipe{
 	width:40%;
-	height:400px;
+	height:450px;
 	margin-left: 50%;
-	position:absolute;
+	position:fixed;
 	border:1px solid black;
 }
+
+#edit_equipe p{
+	margin-left: 4%;
+}
+
 
 
 #gestion{
@@ -211,14 +216,6 @@ li.match_fail{
 	border:1px solid black;
 }
 
-#edit_equipe p{
-	margin-left: 4%;
-}
-
-#listChampionnats{
-	height: 40%;
-}
-
 #listChampionnats .championnat{
 	font-size: 14px;
 	font-weight: bold;
@@ -235,4 +232,30 @@ li.match_fail{
 
 .lienSupprimer{
 	float:right;
+}
+
+#infos_equipe{
+	margin-left: 4%;
+	margin-bottom: 8%;
+	width:40%;
+	height:80px;
+
+}
+
+.h4ChampionnatToAdd{
+	margin-top: 3%;
+	margin-left: 3%;
+}
+
+#listChampionnatsToAdd{
+	margin-bottom: 3%;
+}
+
+#divSelect{
+	margin-left: 4%;
+}
+
+#divButtonAdd{
+	margin-left: 40%;
+	margin-top: -6%;
 }
