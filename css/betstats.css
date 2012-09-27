@@ -156,6 +156,12 @@ li.match_fail{
 }
 
 /** Gestion **/
+
+#divButtons{
+	margin-left: 5%;
+	margin-bottom: 1%;
+}
+
 #accordeon_championnat{
 	width:40%;
 	padding-left: 5%;

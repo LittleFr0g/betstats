@@ -42,8 +42,13 @@
 	  </div>
 	</div>
 
-	<h2>Gestion des équipes</h2>
+	<h2>Gestion</h2>
 
+	<div id="divButtons">
+		<button id='addEquipe' class='btn'>Ajouter une équipe</button>
+		<button id='addChampionnat' class='btn'>Ajouter un championnat</button>
+	</div>
+	
 	<div id="gestion">
 
 		<div id="accordeon_championnat">
@@ -83,7 +88,10 @@
 			</div>
 		</div>
 
+		
+
 		<div id="edit_equipe">
+			<input type="text" id="id_equipe" style="display:none"></input>
 			<h3 id="h3LibelleEquipe"></h3>
 			<ul id="listChampionnats"></ul>
 			<div id="listChampionnatsToAdd"></div>
@@ -92,6 +100,44 @@
 			</div>
 		</div>
 
+		<!-- Popup d'insertion d'une equipe-->
+		<div id="dialog-equipe" title="Ajouter une équipe">
+			<form>
+				<fieldset>
+					<p>
+						<label for="name">Nom</label>
+						<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+					</p>
+					<p>
+						<label>Championnat : </label> 
+						<select name="championnat" id="championnat">
+						<option value=""></option>
+						<?php
+							connect();
+							$query = mysql_query('SELECT ID_CHAMPIONNAT, LIB_CHAMPIONNAT FROM CHAMPIONNAT ORDER BY LIB_CHAMPIONNAT');
+							while ($back = mysql_fetch_array($query)) {
+								echo '<option value="'.$back['ID_CHAMPIONNAT'].'" ';
+								echo '>'.$back['LIB_CHAMPIONNAT'].'</option>';
+							}
+							deconnect();
+						?>
+						</select>
+					</p>
+				</fieldset>
+			</form>
+		</div>
+
+		<!-- Popup d'insertion d'un championnat-->
+		<div id="dialog-championnat" title="Ajouter un championnat">
+			<form>
+				<fieldset>
+					<p>
+						<label for="name">Nom</label>
+						<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+					</p>
+				</fieldset>
+			</form>
+		</div>
 
 
 		
@@ -111,9 +157,10 @@
 		});
 		
 		$( "#edit_equipe").droppable({
+			accept: "#draggable li",
 			drop: function( event, ui ) {
 				clean();
-
+				$( this ).find( "#id_equipe" ).text(ui.draggable.val());
 				$( this ).find( "#h3LibelleEquipe" ).text(ui.draggable.text());
 				$( this ).find( "#h3LibelleEquipe" ).attr('class','h3LibelleEquipe');
 
@@ -140,21 +187,76 @@
 					success: function(response){buildInfosPariEquipe(response)},
 					dataType: 'html'
 				});
-
 			}
 		});
 
+		//Popup equipe
+		$( "#dialog-equipe" ).dialog({
+			autoOpen: false,
+			height: 280,
+			width: 300,
+			modal: true,
+			closeOnEscape: true,
+			resizable: false,
+			buttons: {
+				"Ajouter l'équipe": function() {
+					if(($( this ).find('#name').val().length > 0) && ($( this ).find('#championnat').val() != "")){
+						$.ajax({
+							url: 'ajax_requetes.php',
+							data: { lib_equipe:$( this ).find('#name').val() , id_championnat:$( this ).find('#championnat').val() , requete:15} ,
+						});
+					}
+					$( this ).dialog( "close" )		
+				},
+				"Annuler": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+
+		//Popup championnat
+		$( "#dialog-championnat" ).dialog({
+			autoOpen: false,
+			height: 200,
+			width: 300,
+			modal: true,
+			closeOnEscape: true,
+			resizable: false,
+			buttons: {
+				"Ajouter le championnat": function() {
+					if($( this ).find('#name').val().length > 0){
+						$.ajax({
+							url: 'ajax_requetes.php',
+							data: { lib_championnat:$( this ).find('#name').val() , requete:16} ,
+						});
+					}
+					$( this ).dialog( "close" )		
+				},
+				"Annuler": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+
+		//ouverture de la popup ce création d'équipe
+		$( "#addEquipe" ).button().click(function() {
+				$( "#dialog-equipe" ).dialog( "open" );
+		});
+
+		//ouverture de la popup ce création d'équipe
+		$( "#addChampionnat" ).button().click(function() {
+				$( "#dialog-championnat" ).dialog( "open" );
+		});
+
 		function clean(){
-			$('#listChampionnats').empty();
 			$('#listInfosParisEquipe').empty();
 			$('#saveTeam').remove();
 			$('#infos_equipe').find('h4').remove();
-			$('#listChampionnatsToAdd').empty();
 		}
 
 
 		function buildListeChampionnats(listChampionnats){
-
+			$('#listChampionnats').empty();
 			var championnats = listChampionnats.split(';');
 
 			for(j=0;j<championnats.length-1;j++){
@@ -162,28 +264,34 @@
 				var lib_championnat = championnats[j].split('*')[1];
 				var li = $('<li>').attr('value',id_championnat).attr('class','championnat').html(lib_championnat);
 				var a = $('<a>').attr('href','#').attr('class','lienSupprimer');
-				a.bind('click', function(){
-					$(this).parent().remove();	
+				a.bind('click', function(e){
+					//On supprime l'effet de remonter dans la page quand on supprime un championnat à une equipe
+					e.preventDefault();
+
+					//On supprime l'equipe du championnat choisi
+					$.ajax({
+						url: 'ajax_requetes.php',
+						data: { id_equipe:$('#id_equipe').text() , id_championnat:$(this).parent().val(), requete:14} ,
+					});
+					$(this).parent().remove();
+
+					//On recharge la liste des championnats auquelle on peut ajouter l'equipe
+					$.ajax({
+						url: 'ajax_requetes.php',
+						data: { id_equipe:$('#id_equipe').text() , requete:12} ,
+						success: function(response){buildListeChampionnatsToAdd(response)},
+						dataType: 'html'
+					});	
 				});
 				var img = $('<img>').attr('src','images/fermer.png').attr('alt','Supprimer');
 				a.append(img);
 				li.append(a);
 				$("#listChampionnats").append(li);
 			}
-			var pButtons=$('<p>');
-			var buttonSave = $('<input>').attr('name','saveTeam').attr('id','saveTeam').attr('type','button').attr('value','Enregistrer').attr('class','btn');
-			buttonSave.bind('click', function(){
-				console.log('equipe à enregistrer')
-			});
-
-			var buttonS = $('<input>').attr('name','saveTeam').attr('id','saveTeam').attr('type','button').attr('value','Enregistrer').attr('class','btn');
-
-
-			pButtons.append(buttonSave);
-			$('#edit_equipe').append(pButtons);
 		}
 
 		function buildListeChampionnatsToAdd(listChampionnats){
+			$('#listChampionnatsToAdd').empty();
 			var h4=$('<h4>').html('Ajouter un championnat').attr('class','h4ChampionnatToAdd');
 			var championnats = listChampionnats.split(';');
 
@@ -199,14 +307,29 @@
 			}
 
 			var buttonAdd = $('<input>').attr('name','addChampionnat').attr('id','addChampionnat').attr('type','button').attr('value','Ajouter').attr('class','btn');
+			
+			//Action de clic sur le bouton d'ajout à un championnat
 			buttonAdd.bind('click', function(){
 				if($('#championnatToAdd').val() != 0){
 					$.ajax({
 						url: 'ajax_requetes.php',
-						data: { id_equipe:ui.draggable.val(), id_championnat:$('#championnatToAdd').val() , requete:13}
+						data: { id_equipe:$('#id_equipe').text(), id_championnat:$('#championnatToAdd').val() , requete:13}
 					});
 				}
-				console.log('raffraichir la liste des championnats');
+				//On recharge la liste des championnats auquelle l'equipe appartient
+				$.ajax({
+					url: 'ajax_requetes.php',
+					data: { id_equipe:$('#id_equipe').text() , requete:10} ,
+					success: function(response){buildListeChampionnats(response)},
+					dataType: 'html'
+				});
+				//On recharge la liste des championnats auquelle on peut ajouter l'equipe
+				$.ajax({
+					url: 'ajax_requetes.php',
+					data: { id_equipe:$('#id_equipe').text() , requete:12} ,
+					success: function(response){buildListeChampionnatsToAdd(response)},
+					dataType: 'html'
+				});
 			});
 
 			var div = $('<div>').attr('id','divAddChampionnat');
@@ -224,7 +347,8 @@
 			var h4=$('<h4>').html('Statistiques').attr('class','h4ChampionnatToAdd');
 			var nbMatchs = infosMatchs.split('*')[0];
 			var nbMatchsReussis = infosMatchs.split('*')[1];
-			var pourcentageReussite = ((nbMatchsReussis/nbMatchs) * 100).toFixed(2);
+			if(nbMatchs != 0) var pourcentageReussite = ((nbMatchsReussis/nbMatchs) * 100).toFixed(2);
+			else var pourcentageReussite = 0;
 			var liNbMatchs = $('<li>').html('Nombre de matchs : '+nbMatchs);
 			var liNbMatchsReussis = $('<li>').html('Nombre de matchs réussis : '+nbMatchsReussis);
 			var liPourcentage = $('<li>').html('Pourcentage de réussite : '+pourcentageReussite+' %');

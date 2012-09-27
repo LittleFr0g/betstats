@@ -178,6 +178,39 @@ if($requete==13){
 	mysql_query($insert_equipe) or die(mysql_error());
 }
 
+//Requete pour supprimer une equipe d'un championnat
+if($requete==14){
+	$id_equipe = (int)$_GET['id_equipe'];
+	$id_championnat = (int)$_GET['id_championnat'];
+	$delete_equipe = 'DELETE FROM EQUIPE_CHAMPIONNAT WHERE id_equipe='.$id_equipe.' and id_championnat='.$id_championnat;
+	mysql_query($delete_equipe) or die(mysql_error());
+}
+
+//Requete pour créer une nouvelle équipe
+if($requete==15){
+	$lib_equipe = $_GET['lib_equipe'];
+	$id_championnat = (int)$_GET['id_championnat'];
+
+	$insert_equipe='INSERT INTO `equipe`(`id_equipe`, `lib_equipe`) VALUES (\'\',"'.$lib_equipe.'")';
+	mysql_query($insert_equipe) or die(mysql_error());
+
+	//on recupere l'id de la derniere equipe insere pour lui ajouter un championnat
+	$queryIdEquipe = mysql_query('SELECT MAX(id_equipe) from EQUIPE') or die(mysql_error());
+	$tabIdEquipe = mysql_fetch_array($queryIdEquipe);
+	$id_equipe = $tabIdEquipe[0];
+
+	$insert_equipe = 'INSERT INTO EQUIPE_CHAMPIONNAT(`id_equipe`,`id_championnat`) values('.$id_equipe.','.$id_championnat.')';
+	mysql_query($insert_equipe) or die(mysql_error());
+
+}
+
+//Requete pour ajouter un nouveau championnat
+if($requete==16){
+	$lib_championnat = $_GET['lib_championnat'];
+	$insert_championnat='INSERT INTO `championnat`(`id_championnat`, `lib_championnat`) VALUES (\'\',"'.$lib_championnat.'")';
+	mysql_query($insert_championnat) or die(mysql_error());
+}
+
 deconnect();
 
 
